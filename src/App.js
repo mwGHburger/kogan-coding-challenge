@@ -16,19 +16,19 @@ export class App extends React.Component {
     // Causes request to be made through a proxy
     const proxyurl = "https://cors-anywhere.herokuapp.com/";
     const URL = "http://wp8m3he1wt.s3-website-ap-southeast-2.amazonaws.com";
-    const callAPI = (endpoint) => {
+    const firstEndPoint = "/api/products/1";
+    const fetchPaginatedAPI = (endpoint) => {
       fetch(proxyurl + URL + endpoint)
         .then((res) => res.json())
         .then((data) => {
           data.objects.forEach((product) => {
+            // destructuring assignment
             const { width, length, height } = product.size;
             if (product.category === "Air Conditioners") {
               // calculate cubic metres
               const cubicMetres = (width * length * height) / 100 ** 3;
-
               // calculate cubic weight
               const cubicWeight = cubicMetres * 250;
-
               // setState
               this.setState({
                 totalQuantity: this.state.totalQuantity + 1,
@@ -37,15 +37,18 @@ export class App extends React.Component {
             }
           });
           if (data.next) {
-            callAPI(data.next);
+            fetchPaginatedAPI(data.next);
           }
         })
-        .catch((err) => console.log(err));
+        .catch((err) => console.log(`Error occurred - ${err}`));
     };
-    callAPI("/api/products/1");
+    fetchPaginatedAPI(firstEndPoint);
   }
 
   render() {
+    const averageCubicWeight =
+      this.state.totalCubicWeight / this.state.totalQuantity;
+
     return (
       <div className="results-page">
         <div className="results-container">
@@ -53,14 +56,12 @@ export class App extends React.Component {
             The <span style={{ fontWeight: "bold" }}>average cubic weight</span>{" "}
             for all products in the "
             <span style={{ fontWeight: "bold" }}>Air Conditioners</span>"
-            category is...
+            category is:
           </p>
           <div className="result">
-            {this.state.totalCubicWeight / this.state.totalQuantity
-              ? `${Math.round(
-                  this.state.totalCubicWeight / this.state.totalQuantity
-                )}kg`
-              : "loading"}
+            {averageCubicWeight
+              ? `${Math.round(averageCubicWeight)} kg`
+              : "loading..."}
           </div>
         </div>
       </div>
