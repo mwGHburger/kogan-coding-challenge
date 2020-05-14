@@ -1,4 +1,7 @@
+// react
 import React from "react";
+// styles
+import "./App.css";
 
 export class App extends React.Component {
   constructor() {
@@ -10,14 +13,9 @@ export class App extends React.Component {
   }
 
   componentDidMount() {
+    // Causes request to be made through a proxy
     const proxyurl = "https://cors-anywhere.herokuapp.com/";
     const URL = "http://wp8m3he1wt.s3-website-ap-southeast-2.amazonaws.com";
-    // let endpoint = "/api/products/1";
-
-    // fetch(proxyurl + URL + endpoint)
-    //   .then((res) => res.json())
-    //   .then((data) => console.log(data.objects));
-
     const callAPI = (endpoint) => {
       fetch(proxyurl + URL + endpoint)
         .then((res) => res.json())
@@ -27,33 +25,45 @@ export class App extends React.Component {
             if (product.category === "Air Conditioners") {
               // calculate cubic metres
               const cubicMetres = (width * length * height) / 100 ** 3;
-              console.log("cubicMetres");
-              console.log(cubicMetres);
+
               // calculate cubic weight
               const cubicWeight = cubicMetres * 250;
-              console.log("cubicWeight");
-              console.log(cubicWeight);
+
               // setState
               this.setState({
                 totalQuantity: this.state.totalQuantity + 1,
                 totalCubicWeight: this.state.totalCubicWeight + cubicWeight,
               });
-              console.log(this.state);
             }
           });
-
           if (data.next) {
-            console.log(data.next);
             callAPI(data.next);
-            console.log("final");
-            console.log(this.state);
           }
-        });
+        })
+        .catch((err) => console.log(err));
     };
     callAPI("/api/products/1");
   }
 
   render() {
-    return <div>APP</div>;
+    return (
+      <div className="results-page">
+        <div className="results-container">
+          <p className="result-text">
+            The <span style={{ fontWeight: "bold" }}>average cubic weight</span>{" "}
+            for all products in the "
+            <span style={{ fontWeight: "bold" }}>Air Conditioners</span>"
+            category is...
+          </p>
+          <div className="result">
+            {this.state.totalCubicWeight / this.state.totalQuantity
+              ? `${Math.round(
+                  this.state.totalCubicWeight / this.state.totalQuantity
+                )}kg`
+              : "loading"}
+          </div>
+        </div>
+      </div>
+    );
   }
 }
