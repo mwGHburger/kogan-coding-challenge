@@ -18,8 +18,9 @@
   border-radius: 15px;
 }
 
-.result-text {
+.results-text {
   font-size: 1.5rem;
+  letter-spacing: 1.5px;
 }
 
 .result {

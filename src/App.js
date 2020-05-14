@@ -13,10 +13,12 @@ export class App extends React.Component {
   }
 
   componentDidMount() {
-    // Causes request to be made through a proxy
+    // causes request to be made through a proxy
     const proxyurl = "https://cors-anywhere.herokuapp.com/";
     const URL = "http://wp8m3he1wt.s3-website-ap-southeast-2.amazonaws.com";
     const firstEndPoint = "/api/products/1";
+    const cubicWeightConversion = 250;
+
     const fetchPaginatedAPI = (endpoint) => {
       fetch(proxyurl + URL + endpoint)
         .then((res) => res.json())
@@ -28,7 +30,7 @@ export class App extends React.Component {
               // calculate cubic metres
               const cubicMetres = (width * length * height) / 100 ** 3;
               // calculate cubic weight
-              const cubicWeight = cubicMetres * 250;
+              const cubicWeight = cubicMetres * cubicWeightConversion;
               // setState
               this.setState({
                 totalQuantity: this.state.totalQuantity + 1,
@@ -36,10 +38,13 @@ export class App extends React.Component {
               });
             }
           });
+          // check for pagination
           if (data.next) {
+            // recursion
             fetchPaginatedAPI(data.next);
           }
         })
+        // error handling
         .catch((err) => console.log(`Error occurred - ${err}`));
     };
     fetchPaginatedAPI(firstEndPoint);
@@ -52,7 +57,7 @@ export class App extends React.Component {
     return (
       <div className="results-page">
         <div className="results-container">
-          <p className="result-text">
+          <p className="results-text">
             The <span style={{ fontWeight: "bold" }}>average cubic weight</span>{" "}
             for all products in the "
             <span style={{ fontWeight: "bold" }}>Air Conditioners</span>"
