@@ -13,7 +13,6 @@ export class App extends React.Component {
   }
 
   componentDidMount() {
-    // causes request to be made through a proxy
     const proxyurl = "https://cors-anywhere.herokuapp.com/";
     const URL = "http://wp8m3he1wt.s3-website-ap-southeast-2.amazonaws.com";
     const firstEndPoint = "/api/products/1";
@@ -24,27 +23,20 @@ export class App extends React.Component {
         .then((res) => res.json())
         .then((data) => {
           data.objects.forEach((product) => {
-            // destructuring assignment
             const { width, length, height } = product.size;
             if (product.category === "Air Conditioners") {
-              // calculate cubic metres
               const cubicMetres = (width * length * height) / 100 ** 3;
-              // calculate cubic weight
               const cubicWeight = cubicMetres * cubicWeightConversion;
-              // setState
               this.setState({
                 totalQuantity: this.state.totalQuantity + 1,
                 totalCubicWeight: this.state.totalCubicWeight + cubicWeight,
               });
             }
           });
-          // check for pagination
           if (data.next) {
-            // recursion
             fetchPaginatedAPI(data.next);
           }
         })
-        // error handling
         .catch((err) => console.log(`Error occurred - ${err}`));
     };
     fetchPaginatedAPI(firstEndPoint);
