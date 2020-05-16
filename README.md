@@ -1,11 +1,15 @@
 # Kogan Coding Challenge
 
-This project is my solution to the Kogan Coding Challenge. It utilises the React - Javascript library.
+This project is my solution to the Kogan Coding Challenge. The languages used in this project are as follows:
+
+- Javascript (React Library)
+- HTML
+- CSS
 
 ## Setup Instructions
 
-Install git if you have not done so already. Refer to [Git Install](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
-You can check your git version by typing the following in the terminal:
+Install Git if you have not done so already. Refer to [Git Install](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
+You can check your Git version by typing the following in the terminal:
 
 ```
 git --version
