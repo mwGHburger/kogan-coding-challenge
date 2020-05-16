@@ -47,3 +47,5 @@ Start the development server using:
 ```
 npm run start
 ```
+
+My solution will be shown in the browser (recommended: Google Chrome)
