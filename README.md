@@ -14,7 +14,8 @@ git --version
 ```
 
 To setup this project on your device, first select or create a directory/folder you want to house this project within.
-Then enter the following terminal commands to clone the repository from GitHub into your selected directory/folder:
+
+Enter the following terminal commands to clone the source repository from GitHub into your selected directory/folder:
 
 ```
 git clone https://github.com/mwGHburger/kogan-coding-challenge.git
