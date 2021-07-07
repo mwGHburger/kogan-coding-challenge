@@ -49,3 +49,17 @@ npm run start
 ```
 
 My solution will be shown in the browser. (Recommended browser: Google Chrome)
+
+
+----
+## Usage
+- When prompted "Please enter your path:" you will need to provide the file path which contains the fields data.
+    - You can use a prepared file in this solution: `ToyBlockFactoryTests/TestFiles/ValidTemplate.csv`.
+    - After enter the file path, the program will generate the reports.
+    - If there are any validation errors in the file, the console will print out the list of errors
+---
+## Dependencies
+[XUnit](https://xunit.net/) - Testing framework \
+[Moq](https://github.com/Moq/moq4/wiki/Quickstart) - Mocking framework \
+[FluentValidation](https://fluentvalidation.net/) - Validation library
+---
