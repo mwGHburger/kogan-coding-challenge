@@ -62,4 +62,4 @@ My solution will be shown in the browser. (Recommended browser: Google Chrome)
 [XUnit](https://xunit.net/) - Testing framework \
 [Moq](https://github.com/Moq/moq4/wiki/Quickstart) - Mocking framework \
 [FluentValidation](https://fluentvalidation.net/) - Validation library
----
+
